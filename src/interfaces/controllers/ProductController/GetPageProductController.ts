@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { GetPageProductUsecase } from '../../../application/usecases/ProductUseCase/GetPageProductUsecase';
-import { CovertQueryInInputPageProductDTO } from '../../../application/util/CovertQueryInInputPageProductDTO';
+import { covertQueryInInputPageProductDTO } from '../../../application/util/covertQueryInInputPageProductDTO';
 
 export class GetPageProductController {
     constructor(private readonly getPageProductUsecase: GetPageProductUsecase) {}
@@ -9,9 +9,10 @@ export class GetPageProductController {
     async invoke(req: Request, res: Response): Promise<Response> {
       try {
         const categoryId = typeof req.query.categoryId === "string" ? req.query.categoryId : undefined;
-        const inputCategoryDTO = CovertQueryInInputPageProductDTO(req.query)
+        const searchByName = typeof req.query.searchByName === "string" ? req.query.searchByName : undefined;
+        const inputCategoryDTO = covertQueryInInputPageProductDTO(req.query)
   
-        const categories = await this.getPageProductUsecase.handle(inputCategoryDTO, categoryId);
+        const categories = await this.getPageProductUsecase.handle(inputCategoryDTO, categoryId, searchByName);
   
         return res.status(200).send(categories);
       } catch (error) {

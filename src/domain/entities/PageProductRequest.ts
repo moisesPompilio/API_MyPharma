@@ -10,7 +10,7 @@ export class PageProductRequest {
     this.pageNumber = input?.pageNumber ?? 1;
     this.pageSize = input?.pageSize ?? 20;
     if(input?.sortDirection === "asc" || input?.sortDirection === "desc" || input?.sortDirection === undefined){
-      this.sortDirection = input?.sortDirection === "asc"? "asc" : "desc";
+      this.sortDirection = input?.sortDirection === "desc"? "desc" : "asc";
     }else{
       throw new Error("Invalid sortDirection. Can be either 'desc' or 'asc'");
     }

@@ -93,6 +93,11 @@ routesProduct.delete("/:id", (request, response) => {
  *           type: string
  *           format: uuid
  *         description: get the products from that category informed
+ *       - in: query
+ *         name: searchByName
+ *         schema:
+ *           type: string
+ *         description: get the products from that searchByName informed
  *     responses:
  *       500:
  *         description: Some server error
@@ -103,7 +108,7 @@ routesProduct.delete("/:id", (request, response) => {
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Product'
+ *                 $ref: '#/components/schemas/OutputPageProductResponseDTO'
  */
 
 routesProduct.get("/", (request, response) => {
