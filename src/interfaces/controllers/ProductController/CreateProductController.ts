@@ -7,7 +7,8 @@ export class CreateProductController{
     constructor(private readonly createProductUsecase: CreateProductUseCase){}
     async invoke(req: Request, res: Response ): Promise<Response>{
         try {
-            const inputProductDTO: IInputProductDTO = req.body
+            var inputProductDTO: IInputProductDTO = req.body
+            inputProductDTO.price = Number(inputProductDTO.price)
             await this.createProductUsecase.handle(inputProductDTO)
             return res.status(201).send()
         } catch (error) {

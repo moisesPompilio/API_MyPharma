@@ -10,7 +10,6 @@ generator client {
 model Categories {
   id            String      @id @map("_id") @default(uuid())
   name          String      @unique
-  description   String
   url_photo      String
   products      Products[]
 
