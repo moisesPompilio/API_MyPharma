@@ -48,7 +48,7 @@ export class MongoDBProductRepository implements IProductRepository {
     }
 
     async getUniqueByName(name: string): Promise<Product> {
-      const product = await prismaClient.products.findUnique({
+      const product = await prismaClient.products.findFirst({
         where: { name },
       });
       return new Product(product);

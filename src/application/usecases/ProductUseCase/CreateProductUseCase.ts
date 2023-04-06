@@ -7,7 +7,9 @@ export class CreateProductUseCase{
     constructor(private readonly productRepositorie: IProductRepository, private readonly  getByIdCategoryUseCase: GetByIdCategoryUseCase){}
     async handle(inputProductDTO:IInputProductDTO):Promise<void> {
         uuidIsInvalid(inputProductDTO.categoriesId, "categoriesId");
-        await this.getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
+        if (this.getByIdCategoryUseCase !== undefined) {
+            await this.getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
+          }
         const existingProduct = await this.productRepositorie.getUniqueByName(inputProductDTO.name)
         if(this.productNameExists(existingProduct, inputProductDTO)){
             return Promise.reject( new Error("Product name already exists"))
