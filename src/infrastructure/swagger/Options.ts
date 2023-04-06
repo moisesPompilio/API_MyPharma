@@ -20,11 +20,11 @@ export const swaggerDefinition = {
       'MyPharma technical test api',
     license: {
       name: 'Repository-GitHub',
-      url: 'https://github.com/moisesPompilio/testeUbots',
+      url: 'https://github.com/moisesPompilio/API_MyPharma',
     },
     contact: {
       name: 'Developer Website ',
-      url: 'https://github.com/moisesPompilio/API_MyPharma'
+      url: 'https://github.com/moisesPompilio/a'
     },
   },
   servers: [
