@@ -48,10 +48,9 @@ export class MongoDBProductRepository implements IProductRepository {
     }
 
     async getUniqueByName(name: string): Promise<Product> {
-      const product = await prismaClient.products.findFirst({
+      return await prismaClient.products.findFirst({
         where: { name },
       });
-      return new Product(product);
     }
     
     async getPageByCategory(categoriesId: string, pageProductRequest: PageProductRequest): Promise<IOutputPageProductResponseDTO> {
