@@ -1,15 +1,15 @@
 import { ICategoryRepository } from '../../../domain/interfaces-repositories/ICategoryRepository';
-import { getByIdCategoryUseCase } from './index';
 import { uuidIsInvalid } from '../../util/uuidIsInvalid';
-import { deleteByCategoryProductUseCase } from '../ProductUseCase/index';
+import { GetByIdCategoryUseCase } from './GetByIdCategoryUseCase';
+import { DeleteByCategoryProductUseCase } from '../ProductUseCase/DeleteByCategoryProductUseCase';
 
 export class DeleteByIdCategoryUseCse{
-    constructor(private readonly categoryRepository: ICategoryRepository){}
+    constructor(private readonly categoryRepository: ICategoryRepository, private readonly getByIdCategoryUseCase: GetByIdCategoryUseCase, private readonly deleteByCategoryProductUseCase: DeleteByCategoryProductUseCase){}
     async handle(id: string) {
         uuidIsInvalid(id, "id")
-            await getByIdCategoryUseCase.handle(id)
-            await this.categoryRepository.deleteById(id);
-            await deleteByCategoryProductUseCase.handle(id)
+        await this.getByIdCategoryUseCase.handle(id)
+        await this.categoryRepository.deleteById(id);
+        await this.deleteByCategoryProductUseCase.handle(id)
 
     }
 }

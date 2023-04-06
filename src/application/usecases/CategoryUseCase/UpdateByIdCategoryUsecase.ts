@@ -2,13 +2,13 @@ import { ICategoryRepository } from '../../../domain/interfaces-repositories/ICa
 import { IInputCategoryDTO } from '../../DTO/input/IInputCategoryDTO';
 import { Category } from '../../../domain/entities/Category';
 import { uuidIsInvalid } from '../../util/uuidIsInvalid';
-import { getByIdCategoryUseCase } from './index';
+import { GetByIdCategoryUseCase } from './GetByIdCategoryUseCase';
 
 export class UpdateByIdCategoryUsecase{
-    constructor(private readonly categoryRepository: ICategoryRepository){}
+    constructor(private readonly categoryRepository: ICategoryRepository, private readonly getByIdCategoryUseCase: GetByIdCategoryUseCase){}
     async handle(inputCategoryDTO:IInputCategoryDTO, id: string) {
         uuidIsInvalid(id, "id")
-        await getByIdCategoryUseCase.handle(id)
+        await this.getByIdCategoryUseCase.handle(id)
         const categoryToCheckForDuplicates = await this.categoryRepository.getByName(inputCategoryDTO.name)
         if(this.isCategoryNameDuplicated(categoryToCheckForDuplicates, inputCategoryDTO, id)){
             return Promise.reject( new Error("Category name is already being used by another category"))

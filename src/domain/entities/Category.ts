@@ -9,7 +9,7 @@ export class Category {
     @IsString()
     name: string;
   
-    @IsOptional()
+    @IsNotEmpty()
     @IsString()
     url_photo: string;
 

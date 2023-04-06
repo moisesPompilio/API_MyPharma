@@ -2,10 +2,10 @@ import { IProductRepository } from "../../../domain/interfaces-repositories/IPro
 import { IInputProductDTO } from '../../DTO/input/IInputProductDTO';
 import { Product } from "../../../domain/entities/Product"
 import { uuidIsInvalid } from '../../util/uuidIsInvalid';
-import { getByIdCategoryUseCase } from '../CategoryUseCase/index';
+import { GetByIdCategoryUseCase } from '../CategoryUseCase/GetByIdCategoryUseCase';
 
 export class UpdateByIdProductUseCase{
-    constructor(private readonly productRepository: IProductRepository){}
+    constructor(private readonly productRepository: IProductRepository, private readonly getByIdCategoryUseCase: GetByIdCategoryUseCase){}
     async handle(inputProductDTO:IInputProductDTO, id: string) {
         uuidIsInvalid(id, "id");
         const existingProduct = await this.productRepository.getById(id)
@@ -14,7 +14,7 @@ export class UpdateByIdProductUseCase{
         }
         
         uuidIsInvalid(inputProductDTO.categoriesId, "categoriesId");
-        await getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
+        await this.getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
 
         const productToCheckForDuplicates = await this.productRepository.getUniqueByName(inputProductDTO.name)
         if(this.isProductNameDuplicated(productToCheckForDuplicates, inputProductDTO, id)){

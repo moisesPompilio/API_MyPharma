@@ -1,13 +1,13 @@
 import { Product } from '../../../domain/entities/Product';
 import { IProductRepository } from '../../../domain/interfaces-repositories/IProductRepository';
 import { IInputProductDTO } from '../../DTO/input/IInputProductDTO';
-import { getByIdCategoryUseCase } from '../CategoryUseCase/index';
 import { uuidIsInvalid } from '../../util/uuidIsInvalid';
+import { GetByIdCategoryUseCase } from '../CategoryUseCase/GetByIdCategoryUseCase';
 export class CreateProductUseCase{
-    constructor(private readonly productRepositorie: IProductRepository){}
+    constructor(private readonly productRepositorie: IProductRepository, private readonly  getByIdCategoryUseCase: GetByIdCategoryUseCase){}
     async handle(inputProductDTO:IInputProductDTO) {
         uuidIsInvalid(inputProductDTO.categoriesId, "categoriesId");
-        await getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
+        await this.getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
         const existingProduct = await this.productRepositorie.getUniqueByName(inputProductDTO.name)
         if(this.productNameExists(existingProduct, inputProductDTO)){
             return Promise.reject( new Error("Product name already exists"))
