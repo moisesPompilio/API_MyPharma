@@ -9,8 +9,7 @@ if (result.error) {
 const PORT = process.env.PORT;
 const urlAPI = `http://localhost:${PORT}`
 
-const DOCKER_PORT = process.env.DOCKER_PORT;
-const urlDOCKER = `http://localhost:${DOCKER_PORT}`
+const urlProducion = `https://teste-api-mypharma.onrender.com`
 
 export const swaggerDefinition = {
   openapi: '3.0.0',
@@ -25,13 +24,13 @@ export const swaggerDefinition = {
     },
     contact: {
       name: 'Developer Website ',
-      url: 'https://github.com/moisesPompilio/'
+      url: 'https://github.com/moisesPompilio/API_MyPharma'
     },
   },
   servers: [
     {
-      url: urlDOCKER,
-      description: 'Development server DOCKER',
+      url: urlProducion,
+      description: 'Server Producion',
     },
     {
       url: urlAPI,
