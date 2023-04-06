@@ -6,7 +6,7 @@ import { GetByIdCategoryUseCase } from '../CategoryUseCase/GetByIdCategoryUseCas
 
 export class UpdateByIdProductUseCase{
     constructor(private readonly productRepository: IProductRepository, private readonly getByIdCategoryUseCase: GetByIdCategoryUseCase){}
-    async handle(inputProductDTO:IInputProductDTO, id: string) {
+    async handle(inputProductDTO:IInputProductDTO, id: string):Promise<void> {
         uuidIsInvalid(id, "id");
         const existingProduct = await this.productRepository.getById(id)
         if(!existingProduct){

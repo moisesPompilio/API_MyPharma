@@ -3,7 +3,7 @@ import { uuidIsInvalid } from '../../util/uuidIsInvalid';
 
 export class DeleteByCategoryProductUseCase{
     constructor(private readonly productRepository: IProductRepository){}
-    async handle(categoryId: string) {
+    async handle(categoryId: string):Promise<void> {
         uuidIsInvalid(categoryId, "categoryId")
         await this.productRepository.deleteByCategory(categoryId);
     }

@@ -2,7 +2,7 @@ import { IProductRepository } from '../../../domain/interfaces-repositories/IPro
 import { uuidIsInvalid } from '../../util/uuidIsInvalid';
 export class DeleteByIdProductUseCse{
     constructor(private readonly productRepository: IProductRepository){}
-    async handle(id: string) {
+    async handle(id: string): Promise<void> {
         uuidIsInvalid(id, "id")
         const existingProduct = await this.productRepository.getById(id)
         if(!existingProduct){

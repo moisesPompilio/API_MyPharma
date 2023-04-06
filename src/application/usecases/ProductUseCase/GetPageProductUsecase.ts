@@ -3,14 +3,17 @@ import { IProductRepository } from "../../../domain/interfaces-repositories/IPro
 import { IInputPageProductRequestDTO } from "../../DTO/input/IInputPageProductRequestDTO";
 import { uuidIsInvalid } from '../../util/uuidIsInvalid';
 import { GetByIdCategoryUseCase } from '../CategoryUseCase/GetByIdCategoryUseCase';
+import { IOutputPageProductResponseDTO } from '../../DTO/output/IOutputPageProductResponseDTO';
 
 export class GetPageProductUsecase{
     constructor(private readonly productRepository: IProductRepository, private readonly getByIdCategoryUseCase: GetByIdCategoryUseCase){}
-    async handle(inputPageProduct?: IInputPageProductRequestDTO, categoryId?: string, searchByName?: string) {
+    async handle(inputPageProduct?: IInputPageProductRequestDTO, categoryId?: string, searchByName?: string):Promise<IOutputPageProductResponseDTO> {
         const pageProductRequest = new PageProductRequest(inputPageProduct)
         if(categoryId !== undefined){
             uuidIsInvalid(categoryId, "categoriesId");
-            await this.getByIdCategoryUseCase.handle(categoryId)
+            if (this.getByIdCategoryUseCase !== undefined) {
+                await this.getByIdCategoryUseCase.handle(categoryId)
+              }
             return await this.productRepository.getPageByCategory(categoryId, pageProductRequest);
         }else if(searchByName !== undefined){
             return await this.productRepository.getByName(searchByName, pageProductRequest)

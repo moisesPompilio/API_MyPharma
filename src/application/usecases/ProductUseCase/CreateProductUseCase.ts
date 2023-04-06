@@ -5,7 +5,7 @@ import { uuidIsInvalid } from '../../util/uuidIsInvalid';
 import { GetByIdCategoryUseCase } from '../CategoryUseCase/GetByIdCategoryUseCase';
 export class CreateProductUseCase{
     constructor(private readonly productRepositorie: IProductRepository, private readonly  getByIdCategoryUseCase: GetByIdCategoryUseCase){}
-    async handle(inputProductDTO:IInputProductDTO) {
+    async handle(inputProductDTO:IInputProductDTO):Promise<void> {
         uuidIsInvalid(inputProductDTO.categoriesId, "categoriesId");
         await this.getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
         const existingProduct = await this.productRepositorie.getUniqueByName(inputProductDTO.name)
