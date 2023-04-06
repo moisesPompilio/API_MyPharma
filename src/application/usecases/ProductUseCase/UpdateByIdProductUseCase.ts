@@ -14,7 +14,10 @@ export class UpdateByIdProductUseCase{
         }
         
         uuidIsInvalid(inputProductDTO.categoriesId, "categoriesId");
-        await this.getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
+        if (this.getByIdCategoryUseCase !== undefined) {
+            await this.getByIdCategoryUseCase.handle(inputProductDTO.categoriesId)
+          }
+        
 
         const productToCheckForDuplicates = await this.productRepository.getUniqueByName(inputProductDTO.name)
         if(this.isProductNameDuplicated(productToCheckForDuplicates, inputProductDTO, id)){
